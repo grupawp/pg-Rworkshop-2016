@@ -1,8 +1,8 @@
 # pg-Rworkshop-2016
 Warsztaty z R dla średniozaawansowanych na Politechnice Gdańskiej
 
-- Organizatorzy: @pcejrowski, [proszę dopisać swój nick]
-- Prowadzący: @MarcinKosinski
+- Organizatorzy: [@pcejrowski](https://github.com/pcejrowski), [proszę dopisać swój nick]
+- Prowadzący: [@MarcinKosinski](https://github.com/MarcinKosinski)
 
 Ramowy plan warsztatu
 
