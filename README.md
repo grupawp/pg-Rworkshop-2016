@@ -6,7 +6,7 @@ Warsztaty z R dla średniozaawansowanych na Politechnice Gdańskiej
 
 Ramowy plan warsztatu
 
-- 9:00-9:15/9:20 - [Prezentacja] Paweł Cejrowski - Jak ważne jest Data Science (nauka o danych i procesie ich przetwarzania) w codzienności inżyniera?
+- 9:00-9:15/9:20 - [Prezentacja] Paweł Cejrowski - Istota Data Science
 - 9:20-9:40 - [Prezentacja] Marcin Kosiński - Po co przyszliśmy na warsztat: co wiemy o R i analizie danych?
 - 9:40-10:00 - [Prezentacja/Life-coding] Marcin Kosiński - Omówienie danych wraz z ich przygotowaniem w `dplyr`
 - 10:00-10:30 - [Prezentacja/Life-coding] Marcin Kosiński - Omówienie podstaw uczenia statystycznego na przykładzie klasyfikacji wykorzystującej podstawowy algorytm na danych wybranych do warsztatu.
