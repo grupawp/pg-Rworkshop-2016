@@ -4,6 +4,9 @@ Warsztaty z R dla średniozaawansowanych na Politechnice Gdańskiej
 - Organizatorzy: [@pcejrowski](https://github.com/pcejrowski), [proszę dopisać swój nick]
 - Prowadzący: [@MarcinKosinski](https://github.com/MarcinKosinski)
 
+Strona warsztatu http://grupawp.github.io/pg-Rworkshop-2016/
+
+
 Ramowy plan warsztatu
 
 - 9:00-9:15/9:20 - [Prezentacja] Paweł Cejrowski - Istota Data Science
