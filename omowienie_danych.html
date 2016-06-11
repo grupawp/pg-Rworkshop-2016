@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="ggsci.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Metody klasyfikacji</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-archive"></span>
+     
+    Materiały wstępne
+  </a>
+</li>
+<li>
+  <a href="cat.html">
+    <span class="fa fa-paw"></span>
+     
+    Team cat()
+  </a>
+</li>
+<li>
+  <a href="help.html">
+    <span class="fa fa-question"></span>
+     
+    Team help()
+  </a>
+</li>
+<li>
+  <a href="find.html">
+    <span class="fa fa-road"></span>
+     
+    Team find()
+  </a>
+</li>
+<li>
+  <a href="plot.html">
+    <span class="fa fa-area-chart"></span>
+     
+    Team plot()
+  </a>
+</li>
+<li>
+  <a href="summary.html">
+    <span class="fa fa-random"></span>
+     
+    Team summary()
+  </a>
+</li>
+<li>
+  <a href="options.html">
+    <span class="fa fa-tasks"></span>
+     
+    Team options()
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/grupawp.pl/pg-Rworkshop-2016">
+    <span class="fa fa-github"></span>
+     
+    Kody
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<script id="dsq-count-scr" src="//pg-rworkshop-2016.disqus.com/count.js" async></script>
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#omowienie-danych---przeglad-pakietu-dplyr">Omówienie danych - przegląd pakietu dplyr</a></li>
+<li><a href="#dodatkowe-materiay">Dodatkowe materiały</a><ul>
+<li><a href="#rtcga">RTCGA</a></li>
+<li><a href="#internet-advertisements-data-set"><a href="https://archive.ics.uci.edu/ml/datasets/Internet+Advertisements">Internet Advertisements Data Set</a></a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="omowienie-danych---przeglad-pakietu-dplyr" class="section level1">
+<h1>Omówienie danych - przegląd pakietu dplyr</h1>
+<pre class="r"><code>library(dplyr)
+# devtools::install_github(&#39;hadley/dplyr&#39;)</code></pre>
+</div>
+<div id="dodatkowe-materiay" class="section level1">
+<h1>Dodatkowe materiały</h1>
+<ul>
+<li>Darmowy kurs MOOC <a href="http://pogromcydanych.icm.edu.pl/">Pogromcy Danych</a></li>
+<li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Data Wrangling with dplyr and tidyr</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/data_frames.html">Data frames</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html">Databases</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/hybrid-evaluation.html">Hybrid evaluation</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html">Introduction to dplyr</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/new-sql-backend.html">Adding a new SQL backend</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/nse.html">Non-standard evaluation</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/two-table.html">Two-table verbs</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html">Window functions and grouped mutate/filter</a></li>
+</ul>
+<div id="rtcga" class="section level2">
+<h2>RTCGA</h2>
+<pre class="r"><code>source(&quot;https://bioconductor.org/biocLite.R&quot;) 
+biocLite(&#39;RTCGA.rnaseq&#39;)
+biocLite(&#39;RTCGA.clinical&#39;)
+biocLite(&#39;RTCGA.mutations&#39;)</code></pre>
+<blockquote>
+<p>The Cancer Genome Atlas (TCGA) is a comprehensive and coordinated effort to accelerate our understanding of the molecular basis of cancer through the application of genome analysis technologies, including large-scale genome sequencing.</p>
+</blockquote>
+<pre class="r"><code>library(RTCGA.rnaseq); data(BRCA.rnaseq) # information about genes&#39; expressions
+library(RTCGA.mutations); data(BRCA.mutations) # information about genes&#39; mutations
+library(RTCGA.clinical); data(BRCA.clinical) # patients&#39; clinical data
+BRCA.rnaseq %&gt;%
+    select(`TP53|7157`, bcr_patient_barcode) %&gt;%
+    # bcr_patient_barcode contains a key to merge patients between various datasets
+    rename(TP53 = `TP53|7157`) %&gt;%
+    filter(substr(bcr_patient_barcode, 14, 15) == &quot;01&quot; ) %&gt;% 
+    # 01 at the 14-15th position tells these are cancer sample
+    mutate(bcr_patient_barcode = substr(as.character(bcr_patient_barcode),1,12)) -&gt; 
+    # in clinical info bcr_patient_barcode is only of length 12
+    BRCA.rnaseq.TP53
+
+BRCA.mutations %&gt;%
+    select(Hugo_Symbol, bcr_patient_barcode) %&gt;%
+    # Hugo_symbol tells to which gene the row corresponds.
+    # Ff the rows exist for a gene, this means there was a mutation for this patient for this gene.
+    filter(nchar(bcr_patient_barcode)==15) %&gt;%
+    # sometime there are inproper lengths of this code
+    filter(substr(bcr_patient_barcode, 14, 15)==&quot;01&quot;) %&gt;%   
+    # 01 at the 14-15th position tells these are cancer sample
+    filter(Hugo_Symbol == &#39;PIK3CA&#39;) %&gt;%
+    # we are interested only in the mutations of PIK3CA
+    unique() %&gt;% 
+  # sometimes there are few mutations in the same gene
+    mutate(bcr_patient_barcode = substr(as.character(bcr_patient_barcode),1,12)) -&gt; 
+    # in clinical info bcr_patient_barcode is only of length 12
+    BRCA.mutations.PIK3CA
+
+BRCA.clinical %&gt;%
+    select(patient.bcr_patient_barcode,
+           patient.vital_status, # information whether patient is still alive
+           patient.days_to_last_followup, # how many days has patient been observed if he is alive
+           patient.days_to_death) %&gt;% # how many days has patient been observed if he has passed away
+    mutate(bcr_patient_barcode = toupper(as.character(patient.bcr_patient_barcode))) %&gt;%
+    # in clinical datasets the key column is in lower case and with different name
+    mutate(status = ifelse(as.character(patient.vital_status) == &quot;dead&quot;,1,0),
+           times = ifelse( 
+                        !is.na(patient.days_to_last_followup),
+                        as.numeric(as.character(patient.days_to_last_followup)),
+                        as.numeric(as.character(patient.days_to_death))
+            )) %&gt;%
+    # if the patient does not have a days_to_last_followup time this means
+    # he has days_to_death time
+    filter(!is.na(times)) %&gt;% 
+    # sometime patient does not have any time
+    filter(times &gt; 0) -&gt; BRCA.clinical.survival
+    # sometimes by mistkae patients have non-positive times (few cases)
+
+BRCA.rnaseq.TP53 %&gt;%
+    left_join(y = BRCA.mutations.PIK3CA,
+                        by = &quot;bcr_patient_barcode&quot;) %&gt;%
+    left_join(y = BRCA.clinical.survival,
+                        by = &quot;bcr_patient_barcode&quot;) %&gt;%
+    mutate(TP53_HighExpr = ifelse(TP53 &gt;= median(TP53), &quot;1&quot;, &quot;0&quot;)) %&gt;%
+    mutate(PIK3CA_Mut = as.integer(!is.na(Hugo_Symbol))) %&gt;%
+    select(times, status, TP53_HighExpr, PIK3CA_Mut)  -&gt; BRCA.2survfit
+
+dim(BRCA.2survfit)</code></pre>
+<pre><code>## [1] 1093    4</code></pre>
+<pre class="r"><code>BRCA.2survfit %&gt;%
+  group_by(TP53_HighExpr, PIK3CA_Mut, status) %&gt;%
+  summarise(counts = n()) %&gt;%
+  arrange(desc(counts))</code></pre>
+<pre><code>## Source: local data frame [12 x 4]
+## Groups: TP53_HighExpr, PIK3CA_Mut [4]
+## 
+##    TP53_HighExpr PIK3CA_Mut status counts
+##            (chr)      (int)  (dbl)  (int)
+## 1              0          0      0    359
+## 2              0          0      1     35
+## 3              0          0     NA     18
+## 4              0          1      0    118
+## 5              0          1      1      9
+## 6              0          1     NA      7
+## 7              1          0      0    298
+## 8              1          0      1     47
+## 9              1          0     NA     18
+## 10             1          1      0    161
+## 11             1          1      1     13
+## 12             1          1     NA     10</code></pre>
+<pre class="r"><code>BRCA.2survfit %&gt;%
+  group_by(TP53_HighExpr, PIK3CA_Mut) %&gt;%
+  summarize(min = min(times),
+            median = median(times),
+            mean = mean(times),
+            max = max(times))</code></pre>
+<pre><code>## Source: local data frame [4 x 6]
+## Groups: TP53_HighExpr [?]
+## 
+##   TP53_HighExpr PIK3CA_Mut   min median  mean   max
+##           (chr)      (int) (dbl)  (lgl) (dbl) (dbl)
+## 1             0          0    NA     NA    NA    NA
+## 2             0          1    NA     NA    NA    NA
+## 3             1          0    NA     NA    NA    NA
+## 4             1          1    NA     NA    NA    NA</code></pre>
+<pre class="r"><code>library(survminer)
+library(survival)
+fit &lt;- survfit(Surv(times, status) ~ TP53_HighExpr + PIK3CA_Mut,
+               data = BRCA.2survfit)
+ggsurvplot(fit, theme = theme_RTCGA(), p.val = TRUE, risk.table = TRUE)</code></pre>
+<pre><code>## Warning in if (value %in% columns) {: the condition has length &gt; 1 and only
+## the first element will be used</code></pre>
+<p><img src="omowienie_danych_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="internet-advertisements-data-set" class="section level2">
+<h2><a href="https://archive.ics.uci.edu/ml/datasets/Internet+Advertisements">Internet Advertisements Data Set</a></h2>
+<blockquote>
+<p>This dataset represents a set of possible advertisements on Internet pages. The features encode the geometry of the image (if available) as well as phrases occuring in the URL, the image’s URL and alt text, the anchor text, and words occuring near the anchor text. The task is to predict whether an image is an advertisement (“ad”) or not (“nonad”).</p>
+</blockquote>
+<p><strong>Wymiary:</strong> 3279 X 1558</p>
+</div>
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//pg-rworkshop-2016.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

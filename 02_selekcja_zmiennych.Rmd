@@ -1,0 +1,71 @@
+# Selekcja zmiennych - kilka przykładów
+
+## FSelector - information.gain
+
+```{r}
+library(RTCGA.rnaseq)
+library(dplyr)
+BRCA.rnaseq %>%
+  mutate(bcr_patient_barcode = substr(bcr_patient_barcode, 14, 14)) -> BRCA.rnaseq.tumor
+BRCA.rnaseq.tumor.first<-BRCA.rnaseq.tumor[, 1:1000]
+
+(sum(BRCA.rnaseq.tumor.first$bcr_patient_barcode==0))  #1100 guz 
+(sum(BRCA.rnaseq.tumor.first$bcr_patient_barcode==1))  #112 zdrowy
+
+library(FSelector)
+information.gain(formula =bcr_patient_barcode~., data = BRCA.rnaseq.tumor.first)->wynik.info
+
+wynik.info %>%
+  mutate(nazwy = row.names(wynik.info)) %>%
+  arrange(desc(attr_importance)) -> wyniki.po.info
+
+(subset<- cutoff.biggest.diff(wynik.info))
+(subset)  ##geny o najbardziej wyróżniającym się wskaźniku attr_imprortance
+
+(subset11<-cutoff.k(wynik.info,10))
+```
+
+![](5test_first.tiff)
+
+## Boruta - Boruta
+
+```{r}
+library(Boruta)
+invisible(
+Boruta_model <- Boruta(as.factor(bcr_patient_barcode)~.,
+                       data = BRCA.rnaseq.tumor.first[,1:100], 
+                       doTrace =2, ntree = 50)
+)
+plot(Boruta_model, las=2, xlab="")
+# plotImpHistory(Boruta_model)
+# getSelectedAttributes
+```
+
+
+## Regresja logistyczna z regularyzacją
+
+- glmnet poprzez regularyzację sam dobiera odpowiednie parametry 
+
+```{r}
+library(glmnet)
+model_glmnet <- glmnet(x = as.matrix(BRCA.rnaseq.tumor.first[, -1]),
+                       y = as.factor(BRCA.rnaseq.tumor.first[,1]),
+                       family="binomial",
+                       alpha = 0, lambda.min = 1e-4)
+nsteps <- 10
+b1 <- coef(model_glmnet)[-1, 1:nsteps]
+w <- nonzeroCoef(b1)
+b1 <- as.matrix(b1[w, ])
+matplot(1:nsteps, t(b1), type = "o", pch = 19,
+        col = "blue", xlab = "Step",
+        ylab = "Coefficients", lty = 1)
+title("Lasso")
+abline(h = 0, lty = 2)
+```
+
+## Lasy losowe / drzewa klasyfikacyjne
+
+## pakiet caret 
+
+- http://topepo.github.io/caret/varimp.html
+

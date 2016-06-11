@@ -1,0 +1,44 @@
+name: "pg-Rworkshop-2016"
+navbar:
+  title: "Metody klasyfikacji"
+  left:
+    - text: "Materiały wstępne"
+      href: index.html
+      icon: fa-archive
+    - text: "Team cat()"
+      href: cat.html
+      icon: fa-paw
+    - text: "Team help()"
+      href: help.html
+      icon: fa-question
+    - text: "Team find()"
+      href: find.html
+      icon: fa-road
+    - text: "Team plot()"
+      href: plot.html
+      icon: fa-area-chart
+    - text: "Team summary()"
+      href: summary.html
+      icon: fa-random
+    - text: "Team options()"
+      href: options.html
+      icon: fa-tasks
+  right:
+    - text: "Kody" 
+      icon: fa-github
+      href: https://github.com/grupawp.pl/pg-Rworkshop-2016
+      
+      
+output:
+  html_document:
+    theme: sandstone
+    highlight: textmate
+    include:
+      after_body: footer.html
+      before_body: disqus_prefix.html
+    css: ggsci.css
+    toc: true
+    section_numbering: true
+    toc_depth: 2
+    
+output_dir: "."

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="ggsci.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Metody klasyfikacji</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-archive"></span>
+     
+    Materiały wstępne
+  </a>
+</li>
+<li>
+  <a href="cat.html">
+    <span class="fa fa-paw"></span>
+     
+    Team cat()
+  </a>
+</li>
+<li>
+  <a href="help.html">
+    <span class="fa fa-question"></span>
+     
+    Team help()
+  </a>
+</li>
+<li>
+  <a href="find.html">
+    <span class="fa fa-road"></span>
+     
+    Team find()
+  </a>
+</li>
+<li>
+  <a href="plot.html">
+    <span class="fa fa-area-chart"></span>
+     
+    Team plot()
+  </a>
+</li>
+<li>
+  <a href="summary.html">
+    <span class="fa fa-random"></span>
+     
+    Team summary()
+  </a>
+</li>
+<li>
+  <a href="options.html">
+    <span class="fa fa-tasks"></span>
+     
+    Team options()
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/grupawp.pl/pg-Rworkshop-2016">
+    <span class="fa fa-github"></span>
+     
+    Kody
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<script id="dsq-count-scr" src="//pg-rworkshop-2016.disqus.com/count.js" async></script>
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#selekcja-zmiennych---kilka-przykadow">Selekcja zmiennych - kilka przykładów</a><ul>
+<li><a href="#fselector---information.gain">FSelector - information.gain</a></li>
+<li><a href="#boruta---boruta">Boruta - Boruta</a></li>
+<li><a href="#regresja-logistyczna-z-regularyzacja">Regresja logistyczna z regularyzacją</a></li>
+<li><a href="#lasy-losowe-drzewa-klasyfikacyjne">Lasy losowe / drzewa klasyfikacyjne</a></li>
+<li><a href="#pakiet-caret">pakiet caret</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="selekcja-zmiennych---kilka-przykadow" class="section level1">
+<h1>Selekcja zmiennych - kilka przykładów</h1>
+<div id="fselector---information.gain" class="section level2">
+<h2>FSelector - information.gain</h2>
+<pre class="r"><code>library(RTCGA.rnaseq)
+library(dplyr)
+BRCA.rnaseq %&gt;%
+  mutate(bcr_patient_barcode = substr(bcr_patient_barcode, 14, 14)) -&gt; BRCA.rnaseq.tumor
+BRCA.rnaseq.tumor.first&lt;-BRCA.rnaseq.tumor[, 1:1000]
+
+(sum(BRCA.rnaseq.tumor.first$bcr_patient_barcode==0))  #1100 guz </code></pre>
+<pre><code>## [1] 1100</code></pre>
+<pre class="r"><code>(sum(BRCA.rnaseq.tumor.first$bcr_patient_barcode==1))  #112 zdrowy</code></pre>
+<pre><code>## [1] 112</code></pre>
+<pre class="r"><code>library(FSelector)
+information.gain(formula =bcr_patient_barcode~., data = BRCA.rnaseq.tumor.first)-&gt;wynik.info
+
+wynik.info %&gt;%
+  mutate(nazwy = row.names(wynik.info)) %&gt;%
+  arrange(desc(attr_importance)) -&gt; wyniki.po.info
+
+(subset&lt;- cutoff.biggest.diff(wynik.info))</code></pre>
+<pre><code>## [1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot;</code></pre>
+<pre class="r"><code>(subset)  ##geny o najbardziej wyróżniającym się wskaźniku attr_imprortance</code></pre>
+<pre><code>## [1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot;</code></pre>
+<pre class="r"><code>(subset11&lt;-cutoff.k(wynik.info,10))</code></pre>
+<pre><code>##  [1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot; &quot;ABCA10|10349&quot;   &quot;ABCA9|10350&quot;   
+##  [5] &quot;ALDH1A2|8854&quot;   &quot;ABCA8|10351&quot;    &quot;ADRB2|154&quot;      &quot;ABCA6|23460&quot;   
+##  [9] &quot;ANKRD29|147463&quot; &quot;AQP7P1|375719&quot;</code></pre>
+<div class="figure">
+<img src="5test_first.tiff" alt="" />
+
+</div>
+</div>
+<div id="boruta---boruta" class="section level2">
+<h2>Boruta - Boruta</h2>
+<pre class="r"><code>library(Boruta)
+invisible(
+Boruta_model &lt;- Boruta(as.factor(bcr_patient_barcode)~.,
+                       data = BRCA.rnaseq.tumor.first[,1:100], 
+                       doTrace =2, ntree = 50)
+)</code></pre>
+<pre><code>##  1. run of importance source...</code></pre>
+<pre><code>##  2. run of importance source...</code></pre>
+<pre><code>##  3. run of importance source...</code></pre>
+<pre><code>##  4. run of importance source...</code></pre>
+<pre><code>##  5. run of importance source...</code></pre>
+<pre><code>##  6. run of importance source...</code></pre>
+<pre><code>##  7. run of importance source...</code></pre>
+<pre><code>##  8. run of importance source...</code></pre>
+<pre><code>##  9. run of importance source...</code></pre>
+<pre><code>##  10. run of importance source...</code></pre>
+<pre><code>##  11. run of importance source...</code></pre>
+<pre><code>##  12. run of importance source...</code></pre>
+<pre><code>##  13. run of importance source...</code></pre>
+<pre><code>##  14. run of importance source...</code></pre>
+<pre><code>## Confirmed 10 attributes: `AASS|10157`, `ABCA10|10349`, `ABCA5|23461`, `ABCA6|23460`, `ABCA8|10351` and 5 more.</code></pre>
+<pre><code>## Rejected 38 attributes: `?|100130426`, `?|100133144`, `?|136542`, `?|26823`, `?|280660` and 33 more.</code></pre>
+<pre><code>##  15. run of importance source...</code></pre>
+<pre><code>##  16. run of importance source...</code></pre>
+<pre><code>##  17. run of importance source...</code></pre>
+<pre><code>##  18. run of importance source...</code></pre>
+<pre><code>## Confirmed 2 attributes: `A2M|2`, `AADACL2|344752`.</code></pre>
+<pre><code>## Rejected 12 attributes: `?|100134869`, `?|10357`, `?|10431`, `?|729884`, `AAAS|8086` and 7 more.</code></pre>
+<pre><code>##  19. run of importance source...</code></pre>
+<pre><code>##  20. run of importance source...</code></pre>
+<pre><code>##  21. run of importance source...</code></pre>
+<pre><code>##  22. run of importance source...</code></pre>
+<pre><code>## Confirmed 2 attributes: `AAGAB|79719`, `ABCC9|10060`.</code></pre>
+<pre><code>## Rejected 2 attributes: `?|645851`, `ABCC4|10257`.</code></pre>
+<pre><code>##  23. run of importance source...</code></pre>
+<pre><code>##  24. run of importance source...</code></pre>
+<pre><code>##  25. run of importance source...</code></pre>
+<pre><code>## Rejected 3 attributes: `A2ML1|144568`, `AARS2|57505`, `ABCC8|6833`.</code></pre>
+<pre><code>##  26. run of importance source...</code></pre>
+<pre><code>##  27. run of importance source...</code></pre>
+<pre><code>##  28. run of importance source...</code></pre>
+<pre><code>## Rejected 1 attributes: `ABCD1|215`.</code></pre>
+<pre><code>##  29. run of importance source...</code></pre>
+<pre><code>##  30. run of importance source...</code></pre>
+<pre><code>##  31. run of importance source...</code></pre>
+<pre><code>## Rejected 5 attributes: `?|390284`, `?|653553`, `AARSD1|80755`, `ABCC13|150000`, `ABCC6P2|730013`.</code></pre>
+<pre><code>##  32. run of importance source...</code></pre>
+<pre><code>##  33. run of importance source...</code></pre>
+<pre><code>##  34. run of importance source...</code></pre>
+<pre><code>##  35. run of importance source...</code></pre>
+<pre><code>##  36. run of importance source...</code></pre>
+<pre><code>##  37. run of importance source...</code></pre>
+<pre><code>##  38. run of importance source...</code></pre>
+<pre><code>##  39. run of importance source...</code></pre>
+<pre><code>##  40. run of importance source...</code></pre>
+<pre><code>## Confirmed 1 attributes: `ABCC6P1|653190`.</code></pre>
+<pre><code>##  41. run of importance source...</code></pre>
+<pre><code>##  42. run of importance source...</code></pre>
+<pre><code>##  43. run of importance source...</code></pre>
+<pre><code>## Rejected 2 attributes: `?|155060`, `AADACL3|126767`.</code></pre>
+<pre><code>##  44. run of importance source...</code></pre>
+<pre><code>##  45. run of importance source...</code></pre>
+<pre><code>##  46. run of importance source...</code></pre>
+<pre><code>## Rejected 2 attributes: `ABCC10|89845`, `ABCC2|1244`.</code></pre>
+<pre><code>##  47. run of importance source...</code></pre>
+<pre><code>##  48. run of importance source...</code></pre>
+<pre><code>##  49. run of importance source...</code></pre>
+<pre><code>##  50. run of importance source...</code></pre>
+<pre><code>##  51. run of importance source...</code></pre>
+<pre><code>##  52. run of importance source...</code></pre>
+<pre><code>##  53. run of importance source...</code></pre>
+<pre><code>##  54. run of importance source...</code></pre>
+<pre><code>##  55. run of importance source...</code></pre>
+<pre><code>##  56. run of importance source...</code></pre>
+<pre><code>##  57. run of importance source...</code></pre>
+<pre><code>##  58. run of importance source...</code></pre>
+<pre><code>##  59. run of importance source...</code></pre>
+<pre><code>##  60. run of importance source...</code></pre>
+<pre><code>##  61. run of importance source...</code></pre>
+<pre><code>##  62. run of importance source...</code></pre>
+<pre><code>##  63. run of importance source...</code></pre>
+<pre><code>##  64. run of importance source...</code></pre>
+<pre><code>##  65. run of importance source...</code></pre>
+<pre><code>##  66. run of importance source...</code></pre>
+<pre><code>##  67. run of importance source...</code></pre>
+<pre><code>##  68. run of importance source...</code></pre>
+<pre><code>##  69. run of importance source...</code></pre>
+<pre><code>##  70. run of importance source...</code></pre>
+<pre><code>##  71. run of importance source...</code></pre>
+<pre><code>##  72. run of importance source...</code></pre>
+<pre><code>##  73. run of importance source...</code></pre>
+<pre><code>##  74. run of importance source...</code></pre>
+<pre><code>##  75. run of importance source...</code></pre>
+<pre><code>##  76. run of importance source...</code></pre>
+<pre><code>##  77. run of importance source...</code></pre>
+<pre><code>##  78. run of importance source...</code></pre>
+<pre><code>##  79. run of importance source...</code></pre>
+<pre><code>##  80. run of importance source...</code></pre>
+<pre><code>##  81. run of importance source...</code></pre>
+<pre><code>##  82. run of importance source...</code></pre>
+<pre><code>##  83. run of importance source...</code></pre>
+<pre><code>##  84. run of importance source...</code></pre>
+<pre><code>##  85. run of importance source...</code></pre>
+<pre><code>##  86. run of importance source...</code></pre>
+<pre><code>##  87. run of importance source...</code></pre>
+<pre><code>##  88. run of importance source...</code></pre>
+<pre><code>##  89. run of importance source...</code></pre>
+<pre><code>##  90. run of importance source...</code></pre>
+<pre><code>## Confirmed 1 attributes: `ABAT|18`.</code></pre>
+<pre><code>##  91. run of importance source...</code></pre>
+<pre><code>##  92. run of importance source...</code></pre>
+<pre><code>##  93. run of importance source...</code></pre>
+<pre><code>## Confirmed 1 attributes: `A1BG|1`.</code></pre>
+<pre><code>##  94. run of importance source...</code></pre>
+<pre><code>##  95. run of importance source...</code></pre>
+<pre><code>##  96. run of importance source...</code></pre>
+<pre><code>##  97. run of importance source...</code></pre>
+<pre><code>##  98. run of importance source...</code></pre>
+<pre><code>##  99. run of importance source...</code></pre>
+<pre class="r"><code>plot(Boruta_model, las=2, xlab=&quot;&quot;)</code></pre>
+<p><img src="02_selekcja_zmiennych_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># plotImpHistory(Boruta_model)
+# getSelectedAttributes</code></pre>
+</div>
+<div id="regresja-logistyczna-z-regularyzacja" class="section level2">
+<h2>Regresja logistyczna z regularyzacją</h2>
+<ul>
+<li>glmnet poprzez regularyzację sam dobiera odpowiednie parametry</li>
+</ul>
+<pre class="r"><code>library(glmnet)
+model_glmnet &lt;- glmnet(x = as.matrix(BRCA.rnaseq.tumor.first[, -1]),
+                       y = as.factor(BRCA.rnaseq.tumor.first[,1]),
+                       family=&quot;binomial&quot;,
+                       alpha = 0, lambda.min = 1e-4)
+nsteps &lt;- 10
+b1 &lt;- coef(model_glmnet)[-1, 1:nsteps]
+w &lt;- nonzeroCoef(b1)
+b1 &lt;- as.matrix(b1[w, ])
+matplot(1:nsteps, t(b1), type = &quot;o&quot;, pch = 19,
+        col = &quot;blue&quot;, xlab = &quot;Step&quot;,
+        ylab = &quot;Coefficients&quot;, lty = 1)
+title(&quot;Lasso&quot;)
+abline(h = 0, lty = 2)</code></pre>
+<p><img src="02_selekcja_zmiennych_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="lasy-losowe-drzewa-klasyfikacyjne" class="section level2">
+<h2>Lasy losowe / drzewa klasyfikacyjne</h2>
+</div>
+<div id="pakiet-caret" class="section level2">
+<h2>pakiet caret</h2>
+<ul>
+<li><a href="http://topepo.github.io/caret/varimp.html" class="uri">http://topepo.github.io/caret/varimp.html</a></li>
+</ul>
+</div>
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//pg-rworkshop-2016.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

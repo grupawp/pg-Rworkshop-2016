@@ -1,0 +1,158 @@
+# O klasyfikacji
+
+> Statystyka to nie czarna skrzynka, którą strach otworzyć, ale zbiór pomysłowych obserwacji pozwalających na kontrolowaną analizę danych.
+
+
+> To paraphrase provocatively, ’machine learning is statistics minus any checking of models and assumptions’. Brian D.
+Ripley (about the difference between machine learning and statistics) fortune(50)
+
+> Analiza danych to nie tylko klasyczna statystyka z zagadnieniami estymacji i testowania (najczęściej wykładanymi na standardowych kursach statystyki). Znaczny
+zbiór metod analizy danych nazywany technikami eksploracji danych lub data mining dotyczy zagadnień klasyfikacji, identyfikacji, analizy skupień oraz modelowania
+złożonych procesów.
+
+> To me, that is what statistics is all about. It is gaining insight from data using modelling and visualization. Hadley Wickham
+
+
+Data mining to szybko rosnąca grupa metod analizy danych rozwijana nie tylko
+przez statystyków ale głównie przez biologów, genetyków, cybernetyków, informa-
+tyków, ekonomistów, osoby pracujące nad rozpoznawaniem obrazów, myśli i wiele
+innych grup zawodowych
+
+**Analiza dyskryminacyjna - Klasyfikacja**
+
+W wielu dziedzinach potrzebne są metody, potrafiące automatycznie przypisać no-
+wy obiekt do jednej z wyróżnionych klas. Np. w analizie
+kredytowej dla firm chcemy przewidzieć czy firma spłaci kredyt czy nie. 
+Celem procesu dyskryminacji (nazywanego też klasyfikacją, uczeniem z nauczy-
+cielem lub uczeniem z  nadzorem)  jest zbudowanie  reguły, potrafiącej przypisywać
+możliwie dokładnie nowe obiekty do znanych klas. W przypadku większości metod
+możliwe jest klasyfikowanie do więcej niż dwie klasy
+
+## Funkcje pomocnicze
+
+Do oceny jakości klasyfikatorów przydzadzą się poniższe funkcje
+```{r}
+library(ROCR)
+tabela <- function(predykcja_klasy, klasy_prawdziwe){
+	table(predykcja_klasy, klasy_prawdziwe)
+}
+
+procent <- function(t){
+	100*sum(diag(t))/sum(t)
+}
+
+czulosc <- function(t){
+	if(sum(t[2,])==0) return(0) else t[2,2]/(sum(t[2,]))
+}
+
+precyzja <- function(t){
+	if(sum(t[,2])==0) return(0) else t[2,2]/sum(t[,2])
+}
+
+roc <- function(pred_prawdopod, prawdziwe_klasy,...){
+	pred <- prediction(pred_prawdopod, prawdziwe_klasy)
+	perf <- performance(pred, measure="tpr",x.measure="fpr")
+	plot(perf,col="red",...)
+	abline(0,1)
+	lines(c(0.5,0.5),c(-0.1,1.1),lty=2,col="green")
+}
+
+auc <- function(pred_prawdopod, prawdziwe_klasy){
+	pred <- prediction(pred_prawdopod, prawdziwe_klasy)
+	performance(pred, "auc")@y.values[[1]]
+}
+```
+
+## Słowniczek oceny klasyfikatorów
+
+
+Do   prezentacji   zależności   pomiędzy   zbiorem   wyjściowym   a   uzyskanym 
+klasyfikatorem służy macierz trafności, gdzie korzystamy z notacji:
+
+- TP (true positive) - obserwacje z klasy P sklasyfikowane poprawnie
+- FP (false positive) - obserwacje z klasy N sklasyfikowane błędnie jako klasa P
+- FN (false negative) - obserwacje z klasy P sklasyfikowane błędnie jako klasa N
+- TN (true negative) - obserwacje z klasy N sklasyfikowane poprawnie
+
+
+**Dokładność (procent poprawnego dopasowania) - accuracy**
+
+$(TP+TN)/(TP+FP+FN+TN)$
+
+**Precyzja - precision (positive predictive value)**
+
+$TP/(TP+FP)$
+
+
+**Czułóść - recall/sensitivity (true positive rate)**
+
+$TP/(TP+FN)$
+
+**false positive rate**
+
+$FP/(FP+TN)$
+
+## Na przykładzie SVM
+
+```{r}
+library(e1071)
+
+which(apply(BRCA.rnaseq.tumor.first[1:1000,], MARGIN = 2, sd) < 0.2) -> do_wywalenia
+
+# dopasowanie optymalnych parametrow `cost` i `gamma`
+obj <- tune(svm, as.factor(bcr_patient_barcode)~.,
+            data=BRCA.rnaseq.tumor.first[1:1000,-do_wywalenia], 
+            ranges = list(gamma = 2^(-1:1), cost = 2^(1:4)),
+            tunecontrol = tune.control(sampling = "cross")
+)
+obj$best.parameters
+
+
+mod_svm_opt <- svm(as.factor(bcr_patient_barcode)~., 
+                   data=BRCA.rnaseq.tumor.first[1:1000,-do_wywalenia],
+                   type="C", kernel="radial",
+                   gamma=obj$best.parameters[1],
+                   cost=obj$best.parameters[2],
+                   probability=TRUE)
+
+
+pred_svm <- predict(mod_svm_opt, BRCA.rnaseq.tumor.first[1001:1212,-do_wywalenia],
+                    probability=TRUE)
+pred_praw_svm <- attr(pred_svm,"probabilities")[,2]
+klasy_pred_svm <- ifelse( pred_praw_svm > 0.5, 1, 0)
+tabela(klasy_pred_svm, BRCA.rnaseq.tumor.first[1001:1212,1]) -> tab_svm
+tab_svm
+# precyzja(tab_svm)
+# czulosc(tab_svm)
+# procent(tab_svm)
+roc(pred_praw_svm, as.integer(BRCA.rnaseq.tumor.first[1001:1212,1]))
+
+
+
+```
+
+## Naiwny Klasyfikator Bayesa
+
+```{r}
+
+model_bayes <- naiveBayes(bcr_patient_barcode~.,
+                          data=BRCA.rnaseq.tumor.first[1:1000,-do_wywalenia], laplace=0.2)
+
+bayes_prawd <- predict(model_bayes, newdata=BRCA.rnaseq.tumor.first[1001:1212,-do_wywalenia], 
+                       type="raw")[,2]
+klasy_bayes_pred <- ifelse( bayes_prawd >0.5, 1, 0)
+tabela(klasy_bayes_pred, as.integer(BRCA.rnaseq.tumor.first[1001:1212,1])) -> tab_bayes
+tab_bayes
+precyzja(tab_bayes)
+czulosc(tab_bayes)
+procent(tab_bayes)
+roc(bayes_prawd, as.integer(BRCA.rnaseq.tumor.first[1001:1212,1]))
+```
+
+
+## Gdzie szukać więcej algorytmów/kodów
+
+- https://github.com/MarcinKosinski/DataMiningProject/tree/master/scripts_Rnw
+- http://grupawp.github.io/codepot-workshop-2015/06_klasyfikacja.html
+- caret : http://topepo.github.io/caret/training.html
+- xgboost : https://github.com/mi2-warsaw/SER/blob/master/SER_XIX/xgboost.R

@@ -1,0 +1,156 @@
+# Omówienie danych - przegląd pakietu dplyr
+
+```{r}
+library(dplyr)
+# devtools::install_github('hadley/dplyr')
+```
+
+## Dodatkowe materiały
+
+- Darmowy kurs MOOC [Pogromcy Danych](http://pogromcydanych.icm.edu.pl/)
+- [Data Wrangling with dplyr and tidyr](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+- [Data frames](https://cran.r-project.org/web/packages/dplyr/vignettes/data_frames.html)
+- [Databases](https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html)
+- [Hybrid evaluation](https://cran.r-project.org/web/packages/dplyr/vignettes/hybrid-evaluation.html)
+- [Introduction to dplyr](https://cran.r-project.org/web/packages/dplyr/vignettes/introduction.html)
+- [Adding a new SQL backend](https://cran.r-project.org/web/packages/dplyr/vignettes/new-sql-backend.html)
+- [Non-standard evaluation](https://cran.r-project.org/web/packages/dplyr/vignettes/nse.html)
+- [Two-table verbs](https://cran.r-project.org/web/packages/dplyr/vignettes/two-table.html)
+- [Window functions and grouped mutate/filter](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html)
+
+
+## RTCGA
+
+```{r, eval=FALSE}
+source("https://bioconductor.org/biocLite.R") 
+biocLite('RTCGA.rnaseq')
+biocLite('RTCGA.clinical')
+biocLite('RTCGA.mutations')
+```
+
+
+> The Cancer Genome Atlas (TCGA) is a comprehensive and coordinated effort to accelerate our understanding of the molecular basis of cancer through the application of genome analysis technologies, including large-scale genome sequencing.  
+
+```{r}
+library(RTCGA.rnaseq); data(BRCA.rnaseq) # information about genes' expressions
+library(RTCGA.mutations); data(BRCA.mutations) # information about genes' mutations
+library(RTCGA.clinical); data(BRCA.clinical) # patients' clinical data
+BRCA.rnaseq %>%
+    select(`TP53|7157`, bcr_patient_barcode) %>%
+    # bcr_patient_barcode contains a key to merge patients between various datasets
+    rename(TP53 = `TP53|7157`) %>%
+    filter(substr(bcr_patient_barcode, 14, 15) == "01" ) %>% 
+    # 01 at the 14-15th position tells these are cancer sample
+    mutate(bcr_patient_barcode = substr(as.character(bcr_patient_barcode),1,12)) -> 
+    # in clinical info bcr_patient_barcode is only of length 12
+    BRCA.rnaseq.TP53
+
+BRCA.mutations %>%
+    select(Hugo_Symbol, bcr_patient_barcode) %>%
+    # Hugo_symbol tells to which gene the row corresponds.
+    # Ff the rows exist for a gene, this means there was a mutation 
+    # for this patient for this gene.
+    filter(nchar(bcr_patient_barcode)==15) %>%
+    # sometime there are inproper lengths of this code
+    filter(substr(bcr_patient_barcode, 14, 15)=="01") %>%   
+    # 01 at the 14-15th position tells these are cancer sample
+    filter(Hugo_Symbol == 'PIK3CA') %>%
+    # we are interested only in the mutations of PIK3CA
+    unique() %>% 
+    # sometimes there are few mutations in the same gene
+    mutate(bcr_patient_barcode = substr(as.character(bcr_patient_barcode),1,12)) -> 
+    # in clinical info bcr_patient_barcode is only of length 12
+    BRCA.mutations.PIK3CA
+
+BRCA.clinical %>%
+    select(patient.bcr_patient_barcode,
+           patient.vital_status, # information whether patient is still alive
+           patient.days_to_last_followup, # how many days has patient been observed if he is alive
+           patient.days_to_death) %>% # how many days has patient been observed if he has passed away
+    mutate(bcr_patient_barcode = toupper(as.character(patient.bcr_patient_barcode))) %>%
+    # in clinical datasets the key column is in lower case and with different name
+    mutate(status = ifelse(as.character(patient.vital_status) == "dead",1,0),
+           times = ifelse( 
+                        !is.na(patient.days_to_last_followup),
+                        as.numeric(as.character(patient.days_to_last_followup)),
+                        as.numeric(as.character(patient.days_to_death))
+            )) %>%
+    # if the patient does not have a days_to_last_followup time this means
+    # he has days_to_death time
+    mutate(times = as.numeric(times)) %>%
+    filter(!is.na(times)) %>% 
+    # sometime patient does not have any time
+    filter(times > 0) -> BRCA.clinical.survival
+    # sometimes by mistkae patients have non-positive times (few cases)
+
+BRCA.rnaseq.TP53 %>%
+    left_join(y = BRCA.mutations.PIK3CA,
+                        by = "bcr_patient_barcode") %>%
+    left_join(y = BRCA.clinical.survival,
+                        by = "bcr_patient_barcode") %>%
+    mutate(TP53_HighExpr = ifelse(TP53 >= median(TP53), "1", "0")) %>%
+    mutate(PIK3CA_Mut = as.integer(!is.na(Hugo_Symbol))) %>%
+    select(times, status, TP53_HighExpr, PIK3CA_Mut)  %>%
+    filter(!is.na(status)) -> BRCA.2survfit
+
+dim(BRCA.2survfit)
+
+BRCA.2survfit %>%
+  group_by(TP53_HighExpr, PIK3CA_Mut, status) %>%
+  summarise(counts = n()) %>%
+  arrange(desc(counts))
+
+BRCA.2survfit %>%
+  group_by(TP53_HighExpr, PIK3CA_Mut) %>%
+  summarize(min = min(times),
+            median = median(times),
+            mean = mean(times),
+            max = max(times)) -> agr_stats
+
+library(tidyr)
+agr_stats %>%
+  select(-PIK3CA_Mut) %>%
+  top_n(1, max) %>%
+  gather(TP53_HighExpr) -> agr_stats_2viz
+
+names(agr_stats_2viz)[2:3] <- c("statistics", "value")
+library(ggplot2)
+agr_stats_2viz %>%
+  ggplot(aes(statistics, value,  group =TP53_HighExpr, col = TP53_HighExpr)) + 
+  geom_line() +
+  theme_RTCGA()
+
+
+library(survminer)
+library(survival)
+fit <- survfit(Surv(times, status) ~ TP53_HighExpr + PIK3CA_Mut,
+               data = BRCA.2survfit)
+ggsurvplot(fit, theme = theme_RTCGA(), p.val = TRUE, risk.table = TRUE,
+           risk.table.y.text.col = TRUE, risk.table.y.text = FALSE)
+
+
+```
+
+
+## [Internet Advertisements Data Set](https://archive.ics.uci.edu/ml/datasets/Internet+Advertisements)
+
+> This dataset represents a set of possible advertisements on Internet pages. The features encode the geometry of the image (if available) as well as phrases occuring in the URL, the image's URL and alt text, the anchor text, and words occuring near the anchor text. The task is to predict whether an image is an advertisement ("ad") or not ("nonad"). 
+
+**Wymiary:** 3279 X 1558
+
+```{r, eval = FALSE}
+ad <- read.csv("~/pg-Rworkshop-2016/dane/ad.data", header=FALSE,stringsAsFactors = FALSE)
+ad[ad == "   ?"] <- 0
+
+for(i in 1:ncol(ad)){
+  gsub(" ", "", ad[, i]) %>%
+    as.character() %>%
+    as.numeric() -> ad[, i]
+}
+
+
+ad %>% 
+  summarise_each(funs(mean)) %>%
+  .[, 1:6]
+```
+
