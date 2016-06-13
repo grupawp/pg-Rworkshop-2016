@@ -271,6 +271,10 @@ $(document).ready(function () {
 <li>Prowadzący: <a href="https://github.com/MarcinKosinski">Marcin Kosiński</a></li>
 </ul>
 <p>Strona warsztatu <a href="http://grupawp.github.io/pg-Rworkshop-2016/" class="uri">http://grupawp.github.io/pg-Rworkshop-2016/</a></p>
+<div class="figure">
+<img src="view.JPG" alt="" />
+
+</div>
 </div>
 <div id="ramowy-plan-warsztatu" class="section level1">
 <h1>Ramowy plan warsztatu</h1>
@@ -394,24 +398,24 @@ BRCA.rnaseq.TP53 %&gt;%
     filter(!is.na(status)) -&gt; BRCA.2survfit
 
 dim(BRCA.2survfit)</code></pre>
-<pre><code>## [1] 1040    4</code></pre>
+<pre><code>[1] 1040    4</code></pre>
 <pre class="r"><code>BRCA.2survfit %&gt;%
   group_by(TP53_HighExpr, PIK3CA_Mut, status) %&gt;%
   summarise(counts = n()) %&gt;%
   arrange(desc(counts))</code></pre>
-<pre><code>## Source: local data frame [8 x 4]
-## Groups: TP53_HighExpr, PIK3CA_Mut [4]
-## 
-##   TP53_HighExpr PIK3CA_Mut status counts
-##           (chr)      (int)  (dbl)  (int)
-## 1             0          0      0    359
-## 2             0          0      1     35
-## 3             0          1      0    118
-## 4             0          1      1      9
-## 5             1          0      0    298
-## 6             1          0      1     47
-## 7             1          1      0    161
-## 8             1          1      1     13</code></pre>
+<pre><code>Source: local data frame [8 x 4]
+Groups: TP53_HighExpr, PIK3CA_Mut [4]
+
+  TP53_HighExpr PIK3CA_Mut status counts
+          (chr)      (int)  (dbl)  (int)
+1             0          0      0    359
+2             0          0      1     35
+3             0          1      0    118
+4             0          1      1      9
+5             1          0      0    298
+6             1          0      1     47
+7             1          1      0    161
+8             1          1      1     13</code></pre>
 <pre class="r"><code>BRCA.2survfit %&gt;%
   group_by(TP53_HighExpr, PIK3CA_Mut) %&gt;%
   summarize(min = min(times),
@@ -431,16 +435,14 @@ agr_stats_2viz %&gt;%
   ggplot(aes(statistics, value,  group =TP53_HighExpr, col = TP53_HighExpr)) + 
   geom_line() +
   theme_RTCGA()</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="1152" /></p>
 <pre class="r"><code>library(survminer)
 library(survival)
 fit &lt;- survfit(Surv(times, status) ~ TP53_HighExpr + PIK3CA_Mut,
                data = BRCA.2survfit)
 ggsurvplot(fit, theme = theme_RTCGA(), p.val = TRUE, risk.table = TRUE,
            risk.table.y.text.col = TRUE, risk.table.y.text = FALSE)</code></pre>
-<pre><code>## Warning in if (value %in% columns) {: the condition has length &gt; 1 and only
-## the first element will be used</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-2.png" width="1152" /></p>
 </div>
 <div id="internet-advertisements-data-set" class="section level2">
 <h2><a href="https://archive.ics.uci.edu/ml/datasets/Internet+Advertisements">Internet Advertisements Data Set</a></h2>
@@ -474,9 +476,9 @@ BRCA.rnaseq %&gt;%
 BRCA.rnaseq.tumor.first&lt;-BRCA.rnaseq.tumor[, 1:1000]
 
 (sum(BRCA.rnaseq.tumor.first$bcr_patient_barcode==0))  #1100 guz </code></pre>
-<pre><code>## [1] 1100</code></pre>
+<pre><code>[1] 1100</code></pre>
 <pre class="r"><code>(sum(BRCA.rnaseq.tumor.first$bcr_patient_barcode==1))  #112 zdrowy</code></pre>
-<pre><code>## [1] 112</code></pre>
+<pre><code>[1] 112</code></pre>
 <pre class="r"><code>library(FSelector)
 information.gain(formula =bcr_patient_barcode~., data = BRCA.rnaseq.tumor.first)-&gt;wynik.info
 
@@ -485,13 +487,12 @@ wynik.info %&gt;%
   arrange(desc(attr_importance)) -&gt; wyniki.po.info
 
 (subset&lt;- cutoff.biggest.diff(wynik.info))</code></pre>
-<pre><code>## [1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot;</code></pre>
+<pre><code>[1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot;</code></pre>
 <pre class="r"><code>(subset)  ##geny o najbardziej wyróżniającym się wskaźniku attr_imprortance</code></pre>
-<pre><code>## [1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot;</code></pre>
+<pre><code>[1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot;</code></pre>
 <pre class="r"><code>(subset11&lt;-cutoff.k(wynik.info,10))</code></pre>
-<pre><code>##  [1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot; &quot;ABCA10|10349&quot;   &quot;ABCA9|10350&quot;   
-##  [5] &quot;ALDH1A2|8854&quot;   &quot;ABCA8|10351&quot;    &quot;ADRB2|154&quot;      &quot;ABCA6|23460&quot;   
-##  [9] &quot;ANKRD29|147463&quot; &quot;AQP7P1|375719&quot;</code></pre>
+<pre><code> [1] &quot;ADAMTS5|11096&quot;  &quot;ARHGAP20|57569&quot; &quot;ABCA10|10349&quot;   &quot;ABCA9|10350&quot;    &quot;ALDH1A2|8854&quot;   &quot;ABCA8|10351&quot;    &quot;ADRB2|154&quot;      &quot;ABCA6|23460&quot;   
+ [9] &quot;ANKRD29|147463&quot; &quot;AQP7P1|375719&quot; </code></pre>
 <div class="figure">
 <img src="5test_first.tiff" alt="" />
 
@@ -504,124 +505,9 @@ invisible(
 Boruta_model &lt;- Boruta(as.factor(bcr_patient_barcode)~.,
                        data = BRCA.rnaseq.tumor.first[,1:100], 
                        doTrace =2, ntree = 50)
-)</code></pre>
-<pre><code>##  1. run of importance source...</code></pre>
-<pre><code>##  2. run of importance source...</code></pre>
-<pre><code>##  3. run of importance source...</code></pre>
-<pre><code>##  4. run of importance source...</code></pre>
-<pre><code>##  5. run of importance source...</code></pre>
-<pre><code>##  6. run of importance source...</code></pre>
-<pre><code>##  7. run of importance source...</code></pre>
-<pre><code>##  8. run of importance source...</code></pre>
-<pre><code>##  9. run of importance source...</code></pre>
-<pre><code>##  10. run of importance source...</code></pre>
-<pre><code>##  11. run of importance source...</code></pre>
-<pre><code>##  12. run of importance source...</code></pre>
-<pre><code>##  13. run of importance source...</code></pre>
-<pre><code>##  14. run of importance source...</code></pre>
-<pre><code>## Confirmed 12 attributes: `A2M|2`, `AADACL2|344752`, `AASS|10157`, `ABCA10|10349`, `ABCA5|23461` and 7 more.</code></pre>
-<pre><code>## Rejected 39 attributes: `?|100130426`, `?|100133144`, `?|136542`, `?|26823`, `?|280660` and 34 more.</code></pre>
-<pre><code>##  15. run of importance source...</code></pre>
-<pre><code>##  16. run of importance source...</code></pre>
-<pre><code>##  17. run of importance source...</code></pre>
-<pre><code>##  18. run of importance source...</code></pre>
-<pre><code>## Rejected 6 attributes: `?|100134869`, `?|729884`, `?|8225`, `A2BP1|54715`, `ABCC11|85320` and 1 more.</code></pre>
-<pre><code>##  19. run of importance source...</code></pre>
-<pre><code>##  20. run of importance source...</code></pre>
-<pre><code>##  21. run of importance source...</code></pre>
-<pre><code>##  22. run of importance source...</code></pre>
-<pre><code>## Rejected 5 attributes: `AATF|26574`, `ABCA2|20`, `ABCB11|8647`, `ABCC2|1244`, `ABCD1|215`.</code></pre>
-<pre><code>##  23. run of importance source...</code></pre>
-<pre><code>##  24. run of importance source...</code></pre>
-<pre><code>##  25. run of importance source...</code></pre>
-<pre><code>## Confirmed 3 attributes: `AAGAB|79719`, `ABCB8|11194`, `ABCC6P1|653190`.</code></pre>
-<pre><code>## Rejected 1 attributes: `AADACL4|343066`.</code></pre>
-<pre><code>##  26. run of importance source...</code></pre>
-<pre><code>##  27. run of importance source...</code></pre>
-<pre><code>##  28. run of importance source...</code></pre>
-<pre><code>## Rejected 4 attributes: `?|653553`, `A4GALT|53947`, `ABCA3|21`, `ABCC8|6833`.</code></pre>
-<pre><code>##  29. run of importance source...</code></pre>
-<pre><code>##  30. run of importance source...</code></pre>
-<pre><code>##  31. run of importance source...</code></pre>
-<pre><code>## Rejected 4 attributes: `?|10357`, `?|155060`, `AARSD1|80755`, `ABCC6P2|730013`.</code></pre>
-<pre><code>##  32. run of importance source...</code></pre>
-<pre><code>##  33. run of importance source...</code></pre>
-<pre><code>##  34. run of importance source...</code></pre>
-<pre><code>##  35. run of importance source...</code></pre>
-<pre><code>##  36. run of importance source...</code></pre>
-<pre><code>##  37. run of importance source...</code></pre>
-<pre><code>## Confirmed 1 attributes: `ABCB7|22`.</code></pre>
-<pre><code>## Rejected 1 attributes: `?|10431`.</code></pre>
-<pre><code>##  38. run of importance source...</code></pre>
-<pre><code>##  39. run of importance source...</code></pre>
-<pre><code>##  40. run of importance source...</code></pre>
-<pre><code>##  41. run of importance source...</code></pre>
-<pre><code>##  42. run of importance source...</code></pre>
-<pre><code>##  43. run of importance source...</code></pre>
-<pre><code>##  44. run of importance source...</code></pre>
-<pre><code>##  45. run of importance source...</code></pre>
-<pre><code>##  46. run of importance source...</code></pre>
-<pre><code>##  47. run of importance source...</code></pre>
-<pre><code>##  48. run of importance source...</code></pre>
-<pre><code>##  49. run of importance source...</code></pre>
-<pre><code>##  50. run of importance source...</code></pre>
-<pre><code>##  51. run of importance source...</code></pre>
-<pre><code>## Rejected 1 attributes: `AADACL3|126767`.</code></pre>
-<pre><code>##  52. run of importance source...</code></pre>
-<pre><code>##  53. run of importance source...</code></pre>
-<pre><code>##  54. run of importance source...</code></pre>
-<pre><code>##  55. run of importance source...</code></pre>
-<pre><code>##  56. run of importance source...</code></pre>
-<pre><code>##  57. run of importance source...</code></pre>
-<pre><code>##  58. run of importance source...</code></pre>
-<pre><code>##  59. run of importance source...</code></pre>
-<pre><code>##  60. run of importance source...</code></pre>
-<pre><code>##  61. run of importance source...</code></pre>
-<pre><code>##  62. run of importance source...</code></pre>
-<pre><code>##  63. run of importance source...</code></pre>
-<pre><code>##  64. run of importance source...</code></pre>
-<pre><code>##  65. run of importance source...</code></pre>
-<pre><code>##  66. run of importance source...</code></pre>
-<pre><code>##  67. run of importance source...</code></pre>
-<pre><code>## Confirmed 1 attributes: `ABAT|18`.</code></pre>
-<pre><code>##  68. run of importance source...</code></pre>
-<pre><code>##  69. run of importance source...</code></pre>
-<pre><code>##  70. run of importance source...</code></pre>
-<pre><code>##  71. run of importance source...</code></pre>
-<pre><code>##  72. run of importance source...</code></pre>
-<pre><code>##  73. run of importance source...</code></pre>
-<pre><code>## Confirmed 1 attributes: `A1BG|1`.</code></pre>
-<pre><code>## Rejected 1 attributes: `ABCC4|10257`.</code></pre>
-<pre><code>##  74. run of importance source...</code></pre>
-<pre><code>##  75. run of importance source...</code></pre>
-<pre><code>##  76. run of importance source...</code></pre>
-<pre><code>##  77. run of importance source...</code></pre>
-<pre><code>##  78. run of importance source...</code></pre>
-<pre><code>##  79. run of importance source...</code></pre>
-<pre><code>##  80. run of importance source...</code></pre>
-<pre><code>##  81. run of importance source...</code></pre>
-<pre><code>##  82. run of importance source...</code></pre>
-<pre><code>##  83. run of importance source...</code></pre>
-<pre><code>## Rejected 1 attributes: `ABCC13|150000`.</code></pre>
-<pre><code>##  84. run of importance source...</code></pre>
-<pre><code>##  85. run of importance source...</code></pre>
-<pre><code>##  86. run of importance source...</code></pre>
-<pre><code>##  87. run of importance source...</code></pre>
-<pre><code>##  88. run of importance source...</code></pre>
-<pre><code>##  89. run of importance source...</code></pre>
-<pre><code>##  90. run of importance source...</code></pre>
-<pre><code>##  91. run of importance source...</code></pre>
-<pre><code>##  92. run of importance source...</code></pre>
-<pre><code>##  93. run of importance source...</code></pre>
-<pre><code>##  94. run of importance source...</code></pre>
-<pre><code>##  95. run of importance source...</code></pre>
-<pre><code>## Rejected 2 attributes: `?|90288`, `A2ML1|144568`.</code></pre>
-<pre><code>##  96. run of importance source...</code></pre>
-<pre><code>##  97. run of importance source...</code></pre>
-<pre><code>##  98. run of importance source...</code></pre>
-<pre><code>##  99. run of importance source...</code></pre>
-<pre class="r"><code>plot(Boruta_model, las=2, xlab=&quot;&quot;)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+)
+plot(Boruta_model, las=2, xlab=&quot;&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="1152" /></p>
 <pre class="r"><code># plotImpHistory(Boruta_model)
 # getSelectedAttributes</code></pre>
 </div>
@@ -644,7 +530,7 @@ matplot(1:nsteps, t(b1), type = &quot;o&quot;, pch = 19,
         ylab = &quot;Coefficients&quot;, lty = 1)
 title(&quot;Lasso&quot;)
 abline(h = 0, lty = 2)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="1152" /></p>
 </div>
 <div id="lasy-losowe-drzewa-klasyfikacyjne" class="section level2">
 <h2>Lasy losowe / drzewa klasyfikacyjne</h2>
@@ -737,8 +623,8 @@ obj &lt;- tune(svm, as.factor(bcr_patient_barcode)~.,
             tunecontrol = tune.control(sampling = &quot;cross&quot;)
 )
 obj$best.parameters</code></pre>
-<pre><code>##   gamma cost
-## 1   0.5    2</code></pre>
+<pre><code>  gamma cost
+1   0.5    2</code></pre>
 <pre class="r"><code>mod_svm_opt &lt;- svm(as.factor(bcr_patient_barcode)~., 
                    data=BRCA.rnaseq.tumor.first[1:1000,-do_wywalenia],
                    type=&quot;C&quot;, kernel=&quot;radial&quot;,
@@ -753,14 +639,14 @@ pred_praw_svm &lt;- attr(pred_svm,&quot;probabilities&quot;)[,2]
 klasy_pred_svm &lt;- ifelse( pred_praw_svm &gt; 0.5, 1, 0)
 tabela(klasy_pred_svm, BRCA.rnaseq.tumor.first[1001:1212,1]) -&gt; tab_svm
 tab_svm</code></pre>
-<pre><code>##                klasy_prawdziwe
-## predykcja_klasy   0   1
-##               0 201  11</code></pre>
+<pre><code>               klasy_prawdziwe
+predykcja_klasy   0   1
+              0 201  11</code></pre>
 <pre class="r"><code># precyzja(tab_svm)
 # czulosc(tab_svm)
 # procent(tab_svm)
 roc(pred_praw_svm, as.integer(BRCA.rnaseq.tumor.first[1001:1212,1]))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="1152" /></p>
 </div>
 <div id="naiwny-klasyfikator-bayesa" class="section level2">
 <h2>Naiwny Klasyfikator Bayesa</h2>
@@ -772,18 +658,18 @@ bayes_prawd &lt;- predict(model_bayes, newdata=BRCA.rnaseq.tumor.first[1001:1212
 klasy_bayes_pred &lt;- ifelse( bayes_prawd &gt;0.5, 1, 0)
 tabela(klasy_bayes_pred, as.integer(BRCA.rnaseq.tumor.first[1001:1212,1])) -&gt; tab_bayes
 tab_bayes</code></pre>
-<pre><code>##                klasy_prawdziwe
-## predykcja_klasy   0   1
-##               0 200   0
-##               1   1  11</code></pre>
+<pre><code>               klasy_prawdziwe
+predykcja_klasy   0   1
+              0 200   0
+              1   1  11</code></pre>
 <pre class="r"><code>precyzja(tab_bayes)</code></pre>
-<pre><code>## [1] 1</code></pre>
+<pre><code>[1] 1</code></pre>
 <pre class="r"><code>czulosc(tab_bayes)</code></pre>
-<pre><code>## [1] 0.9166667</code></pre>
+<pre><code>[1] 0.9166667</code></pre>
 <pre class="r"><code>procent(tab_bayes)</code></pre>
-<pre><code>## [1] 99.5283</code></pre>
+<pre><code>[1] 99.5283</code></pre>
 <pre class="r"><code>roc(bayes_prawd, as.integer(BRCA.rnaseq.tumor.first[1001:1212,1]))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" width="1152" /></p>
 </div>
 <div id="gdzie-szukac-wiecej-algorytmowkodow" class="section level2">
 <h2>Gdzie szukać więcej algorytmów/kodów</h2>
@@ -795,52 +681,33 @@ tab_bayes</code></pre>
 </ul>
 <p>Session info:</p>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.3.0 (2016-05-03)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 14.04.4 LTS
-## 
-## locale:
-##  [1] LC_CTYPE=pl_PL.UTF-8          LC_NUMERIC=C                 
-##  [3] LC_TIME=pl_PL.UTF-8           LC_COLLATE=pl_PL.UTF-8       
-##  [5] LC_MONETARY=pl_PL.UTF-8       LC_MESSAGES=pl_PL.UTF-8      
-##  [7] LC_PAPER=pl_PL.UTF-8          LC_NAME=pl_PL.UTF-8          
-##  [9] LC_ADDRESS=pl_PL.UTF-8        LC_TELEPHONE=pl_PL.UTF-8     
-## [11] LC_MEASUREMENT=pl_PL.UTF-8    LC_IDENTIFICATION=pl_PL.UTF-8
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-##  [1] e1071_1.6-7                  ROCR_1.0-7                  
-##  [3] gplots_3.0.1                 glmnet_2.0-5                
-##  [5] foreach_1.4.3                Matrix_1.2-6                
-##  [7] Boruta_5.0.0                 ranger_0.4.0                
-##  [9] FSelector_0.20               survival_2.39-4             
-## [11] survminer_0.2.1.900          ggplot2_2.1.0               
-## [13] tidyr_0.4.1                  RTCGA.clinical_20151101.2.0 
-## [15] RTCGA.mutations_20151101.2.0 RTCGA.rnaseq_20151101.2.0   
-## [17] RTCGA_1.2.2                  dplyr_0.4.3                 
-## [19] rmarkdown_0.9.6             
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.5         lattice_0.20-33     RWeka_0.4-27       
-##  [4] class_7.3-14        gtools_3.5.0        assertthat_0.1     
-##  [7] digest_0.6.9        R6_2.1.2            plyr_1.8.4         
-## [10] chron_2.3-47        evaluate_0.9        httr_1.1.0         
-## [13] RWekajars_3.9.0-1   lazyeval_0.1.10     data.table_1.9.6   
-## [16] gdata_2.17.0        labeling_0.3        devtools_1.11.1    
-## [19] splines_3.3.0       stringr_1.0.0       pander_0.6.0       
-## [22] munsell_0.4.3       htmltools_0.3.5     gridExtra_2.2.1    
-## [25] codetools_0.2-14    randomForest_4.6-12 XML_3.98-1.4       
-## [28] withr_1.0.1         bitops_1.0-6        grid_3.3.0         
-## [31] gtable_0.2.0        DBI_0.4-1           magrittr_1.5       
-## [34] formatR_1.4         scales_0.4.0        KernSmooth_2.23-15 
-## [37] stringi_1.1.1       viridis_0.3.4       ggthemes_3.0.3     
-## [40] xml2_0.1.2          iterators_1.0.8     tools_3.3.0        
-## [43] entropy_1.2.1       purrr_0.2.1         parallel_3.3.0     
-## [46] yaml_2.1.13         colorspace_1.2-6    caTools_1.17.1     
-## [49] rvest_0.3.1         memoise_1.0.0       rJava_0.9-8        
-## [52] knitr_1.13</code></pre>
+<pre><code>R version 3.3.0 (2016-05-03)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.4 LTS
+
+locale:
+ [1] LC_CTYPE=pl_PL.UTF-8          LC_NUMERIC=C                  LC_TIME=pl_PL.UTF-8           LC_COLLATE=pl_PL.UTF-8       
+ [5] LC_MONETARY=pl_PL.UTF-8       LC_MESSAGES=pl_PL.UTF-8       LC_PAPER=pl_PL.UTF-8          LC_NAME=pl_PL.UTF-8          
+ [9] LC_ADDRESS=pl_PL.UTF-8        LC_TELEPHONE=pl_PL.UTF-8      LC_MEASUREMENT=pl_PL.UTF-8    LC_IDENTIFICATION=pl_PL.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] knitr_1.13                   e1071_1.6-7                  ROCR_1.0-7                   gplots_3.0.1                 glmnet_2.0-5                
+ [6] foreach_1.4.3                Matrix_1.2-6                 Boruta_5.0.0                 ranger_0.4.0                 FSelector_0.20              
+[11] survival_2.39-4              survminer_0.2.1.900          ggplot2_2.1.0                tidyr_0.4.1                  RTCGA.clinical_20151101.2.0 
+[16] RTCGA.mutations_20151101.2.0 RTCGA.rnaseq_20151101.2.0    RTCGA_1.2.2                  dplyr_0.4.3                  rmarkdown_0.9.6             
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.5         lattice_0.20-33     RWeka_0.4-27        class_7.3-14        gtools_3.5.0        assertthat_0.1      digest_0.6.9       
+ [8] R6_2.1.2            plyr_1.8.4          chron_2.3-47        evaluate_0.9        httr_1.1.0          RWekajars_3.9.0-1   lazyeval_0.1.10    
+[15] data.table_1.9.6    gdata_2.17.0        labeling_0.3        devtools_1.11.1     splines_3.3.0       stringr_1.0.0       pander_0.6.0       
+[22] munsell_0.4.3       htmltools_0.3.5     gridExtra_2.2.1     codetools_0.2-14    randomForest_4.6-12 XML_3.98-1.4        withr_1.0.1        
+[29] bitops_1.0-6        grid_3.3.0          gtable_0.2.0        DBI_0.4-1           magrittr_1.5        formatR_1.4         scales_0.4.0       
+[36] KernSmooth_2.23-15  stringi_1.1.1       viridis_0.3.4       ggthemes_3.0.3      xml2_0.1.2          iterators_1.0.8     tools_3.3.0        
+[43] entropy_1.2.1       purrr_0.2.1         parallel_3.3.0      yaml_2.1.13         colorspace_1.2-6    caTools_1.17.1      rvest_0.3.1        
+[50] memoise_1.0.0       rJava_0.9-8        </code></pre>
 </div>
 </div>
 

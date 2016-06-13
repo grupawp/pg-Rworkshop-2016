@@ -2,6 +2,22 @@
 title: "Przegląd metod klasyfikacji binarnej"
 ---
 
+```{r include = FALSE}
+library(knitr)
+opts_chunk$set(
+	comment = "",
+	fig.width = 12, 
+	message = FALSE,
+	warning = FALSE,
+	tidy.opts = list(
+		keep.blank.line = TRUE,
+		width.cutoff = 150
+		),
+	options(width = 150),
+	eval = TRUE
+)
+```
+
 # pg-Rworkshop-2016
 
 Warsztaty z R dla średniozaawansowanych na Politechnice Gdańskiej
@@ -11,6 +27,7 @@ Warsztaty z R dla średniozaawansowanych na Politechnice Gdańskiej
 
 Strona warsztatu http://grupawp.github.io/pg-Rworkshop-2016/
 
+![](view.JPG)
 
 # Ramowy plan warsztatu
 
