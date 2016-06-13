@@ -213,24 +213,10 @@ $(document).ready(function () {
     Team plot()
   </a>
 </li>
-<li>
-  <a href="summary.html">
-    <span class="fa fa-random"></span>
-     
-    Team summary()
-  </a>
-</li>
-<li>
-  <a href="options.html">
-    <span class="fa fa-tasks"></span>
-     
-    Team options()
-  </a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/grupawp.pl/pg-Rworkshop-2016">
+  <a href="https://github.com/grupawp/pg-Rworkshop-2016/tree/gh-pages">
     <span class="fa fa-github"></span>
      
     Kody
@@ -340,43 +326,8 @@ obj &lt;- tune(svm, as.factor(bcr_patient_barcode)~.,
             data=BRCA.rnaseq.tumor.first[1:1000,-do_wywalenia], 
             ranges = list(gamma = 2^(-1:1), cost = 2^(1:4)),
             tunecontrol = tune.control(sampling = &quot;cross&quot;)
-)</code></pre>
-<pre><code>## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.
-
-## Warning in svm.default(x, y, scale = scale, ..., na.action = na.action):
-## Variable(s) &#39;X...317712.&#39; constant. Cannot scale data.</code></pre>
-<pre class="r"><code>obj$best.parameters</code></pre>
+)
+obj$best.parameters</code></pre>
 <pre><code>##   gamma cost
 ## 1   0.5    2</code></pre>
 <pre class="r"><code>mod_svm_opt &lt;- svm(as.factor(bcr_patient_barcode)~., 

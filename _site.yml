@@ -17,16 +17,11 @@ navbar:
     - text: "Team plot()"
       href: plot.html
       icon: fa-area-chart
-    - text: "Team summary()"
-      href: summary.html
-      icon: fa-random
-    - text: "Team options()"
-      href: options.html
-      icon: fa-tasks
+
   right:
     - text: "Kody" 
       icon: fa-github
-      href: https://github.com/grupawp.pl/pg-Rworkshop-2016
+      href: https://github.com/grupawp/pg-Rworkshop-2016/tree/gh-pages
       
       
 output:
